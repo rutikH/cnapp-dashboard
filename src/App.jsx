@@ -147,72 +147,86 @@ function App() {
     }))
   }
 
-  return (
-    <div className="min-h-screen p-6 bg-gray-100">
-      <header className="mb-6 flex items-center justify-between bg-white p-4 rounded shadow">
-        <h1 className="text-2xl font-semibold">CNAPP Dashboard</h1>
-        <div className="flex items-center gap-2">
-          <input
-            type="text"
-            placeholder="Search..."
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            className="px-2 py-1 border rounded w-48 text-sm"
-          />
-          <button
-            onClick={() => setManageOpen(true)}
-            className="px-4 py-2 bg-indigo-600 text-white rounded text-sm"
-          >
-            + Widgets
-          </button>
-        </div>
-      </header>
 
-      <main className="space-y-6">
-        {data.categories.map(cat => (
-          <section key={cat.id} className="bg-white p-4 rounded shadow">
-            <h2 className="font-semibold mb-3">{cat.name}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {cat.widgets.filter(w => w.title.toLowerCase().includes(search.toLowerCase())).length > 0 ? (
-                cat.widgets
-                  .filter(w => w.title.toLowerCase().includes(search.toLowerCase()))
-                  .map(w => (
-                    <WidgetCard
-                      key={w.id}
-                      widget={w}
-                      onRemove={() => removeWidget(cat.id, w.id)}
-                    />
-                  ))
-              ) : (
-                <p className="text-gray-500 col-span-full text-center">No widgets exist for this search.</p>
-              )}
-              <div
-                onClick={() => setAddOpen({ open: true, categoryId: cat.id })}
-                className="flex items-center justify-center border-2 border-dashed rounded cursor-pointer min-h-[150px] text-gray-500"
-              >
-                + Add Widget
-              </div>
-            </div>
-          </section>
-        ))}
-      </main>
+return (
+  <div className="app-fullscreen bg-gray-100">
+    <header className="flex items-center justify-between bg-white p-4 rounded shadow mx-6 my-4">
+      <h1 className="text-2xl font-semibold">CNAPP Dashboard</h1>
 
-      <ManageWidgetsPanel
-        open={manageOpen}
-        onClose={() => setManageOpen(false)}
-        categories={data.categories}
-        templates={data.library}
-        onToggle={handleToggleWidget}
-      />
+      <div className="flex items-center gap-2">
+        <input
+          type="text"
+          placeholder="Search..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          className="px-2 py-1 border rounded w-48 text-sm"
+        />
+        <button
+          onClick={() => setManageOpen(true)}
+          className="px-4 py-2 bg-indigo-600 text-white rounded text-sm"
+        >
+          + Widgets
+        </button>
+      </div>
+    </header>
 
-      <AddWidgetModal
-        open={addOpen.open}
-        categoryId={addOpen.categoryId}
-        onClose={() => setAddOpen({ open: false, categoryId: null })}
-        onAdd={addWidget}
-      />
-    </div>
-  )
+ 
+    <main className="app-main mx-6 space-y-6">
+      {data.categories.map(cat => (
+        <section key={cat.id} className="bg-white p-4 rounded shadow section-full">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="font-semibold">{cat.name}</h2>
+            <div className="text-sm text-gray-500">{cat.widgets.length} widgets</div>
+          </div>
+
+      
+          <div className="widgets-row">
+            {cat.widgets
+              .filter(w => w.title.toLowerCase().includes(search.toLowerCase()))
+              .map(w => (
+                <div key={w.id} 
+     className="widget-card bg-white p-4 rounded shadow 
+                sm:min-w-[320px] sm:max-w-[420px] sm:flex-none 
+                w-full">
+  <WidgetCard widget={w} onRemove={() => removeWidget(cat.id, w.id)} />
+</div>
+
+              ))}
+
+         
+           <div
+  onClick={() => setAddOpen({ open: true, categoryId: cat.id })}
+  className="widget-card flex items-center justify-center border-2 border-dashed rounded cursor-pointer min-h-[150px] text-gray-500
+             sm:min-w-[320px] sm:max-w-[420px] sm:flex-none 
+             w-full"
+>
+  + Add Widget
+</div>
+
+          </div>
+        </section>
+      ))}
+    </main>
+
+    
+    <ManageWidgetsPanel
+      open={manageOpen}
+      onClose={() => setManageOpen(false)}
+      categories={data.categories}
+      templates={data.library}
+      onToggle={handleToggleWidget}
+    />
+
+    <AddWidgetModal
+      open={addOpen.open}
+      categoryId={addOpen.categoryId}
+      onClose={() => setAddOpen({ open: false, categoryId: null })}
+      onAdd={addWidget}
+    />
+  </div>
+)
+
+
 }
 
 export default App

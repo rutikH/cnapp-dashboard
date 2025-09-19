@@ -37,7 +37,7 @@ export default function WidgetCard({ widget, onRemove }) {
 
     if (widget.type === 'bar' && Array.isArray(widget.data) && widget.data.length > 0) {
       return (
-        <div className="w-full" style={{ height: 180 }}>
+        <div className="w-full" style={{ height: 220 }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={widget.data}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -54,7 +54,7 @@ export default function WidgetCard({ widget, onRemove }) {
 
     if (widget.type === 'image' && widget.imageUrl) {
       return (
-        <div className="w-full flex items-center justify-center" style={{ height: 180 }}>
+        <div className="w-full flex items-center justify-center" style={{ height: 220 }}>
           <img src={widget.imageUrl} alt={widget.title} className="max-h-full object-contain" />
         </div>
       )
@@ -62,7 +62,7 @@ export default function WidgetCard({ widget, onRemove }) {
 
     if (widget.type === 'empty') {
       return (
-        <div className="flex items-center justify-center text-gray-400 italic" style={{ height: 140 }}>
+        <div className="flex items-center justify-center text-gray-400 italic" style={{ height: 220 }}>
           No Graph data available!
         </div>
       )
@@ -73,7 +73,7 @@ export default function WidgetCard({ widget, onRemove }) {
   }
 
   return (
-    <div className="relative bg-white border rounded-lg p-4 shadow-sm min-h-[200px]">
+    <div className="relative bg-white border rounded-lg p-4 shadow-sm min-h-[220px]">
       <button
         onClick={onRemove}
         title="Remove widget"
